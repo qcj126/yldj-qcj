@@ -45,7 +45,7 @@ public class OperatorServiceImpl extends ServiceImpl<OperatorMapper, Operator> i
      */
     @Override
     public void add(OperatorAddDTO operatorAddDTO) {
-        Integer operatorNumExists = lambdaQuery().eq(Operator::getUsername, operatorAddDTO.getUsername())
+        Long operatorNumExists = lambdaQuery().eq(Operator::getUsername, operatorAddDTO.getUsername())
                 .count();
         if (operatorNumExists > 0) {
             throw new BadRequestException("账号已经存在，请勿重复添加");

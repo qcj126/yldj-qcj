@@ -65,7 +65,7 @@ public interface IServeItemService extends IService<ServeItem> {
      * @param serveTypeId 服务类型id
      * @return 服务项数量
      */
-    int queryActiveServeItemCountByServeTypeId(Long serveTypeId);
+    long queryActiveServeItemCountByServeTypeId(Long serveTypeId);
 
     /**
      * 分页查询

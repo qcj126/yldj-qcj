@@ -30,8 +30,8 @@ spring:
     allow-bean-definition-overriding: true
   cloud:
     nacos:
-      username: ${NACOS_USERNAME}
-      password: ${NACOS_PASSWORD}
+#      username: ${NACOS_USERNAME}
+#      password: ${NACOS_PASSWORD}
       server-addr: ${NACOS_ADDR}
       discovery:
         namespace: ${NACOS_NAMESPACE}

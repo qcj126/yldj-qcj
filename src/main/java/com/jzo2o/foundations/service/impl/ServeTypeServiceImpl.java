@@ -51,7 +51,7 @@ public class ServeTypeServiceImpl extends ServiceImpl<ServeTypeMapper, ServeType
     public void add(ServeTypeUpsertReqDTO serveTypeUpsertReqDTO) {
         //校验名称是否重复
         LambdaQueryWrapper<ServeType> queryWrapper = Wrappers.<ServeType>lambdaQuery().eq(ServeType::getName, serveTypeUpsertReqDTO.getName());
-        Integer count = baseMapper.selectCount(queryWrapper);
+        Long count = baseMapper.selectCount(queryWrapper);
         if(count>0){
             throw new ForbiddenOperationException("服务类型名称不可重复");
         }
@@ -131,7 +131,7 @@ public class ServeTypeServiceImpl extends ServiceImpl<ServeTypeMapper, ServeType
             throw new ForbiddenOperationException("启用状态方可禁用");
         }
         //下属服务项全部为非启用方可禁用
-        int count = serveItemService.queryActiveServeItemCountByServeTypeId(id);
+        long count = serveItemService.queryActiveServeItemCountByServeTypeId(id);
         if (count > 0) {
             throw new ForbiddenOperationException("禁用失败，该服务类型下有启用状态的服务项");
         }

@@ -55,7 +55,7 @@ public class RegionServiceImpl extends ServiceImpl<RegionMapper, Region> impleme
     public void add(RegionUpsertReqDTO regionUpsertReqDTO) {
         //1.校验城市编码是否重复
         LambdaQueryWrapper<Region> queryWrapper = Wrappers.<Region>lambdaQuery().eq(Region::getCityCode, regionUpsertReqDTO.getCityCode());
-        Integer count = baseMapper.selectCount(queryWrapper);
+        Long count = baseMapper.selectCount(queryWrapper);
         if (count > 0) {
             throw new ForbiddenOperationException("城市提交重复");
         }

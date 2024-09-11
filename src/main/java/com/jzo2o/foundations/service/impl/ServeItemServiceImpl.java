@@ -57,7 +57,7 @@ public class ServeItemServiceImpl extends ServiceImpl<ServeItemMapper, ServeItem
     public void add(ServeItemUpsertReqDTO serveItemUpsertReqDTO) {
         //校验名称是否重复
         LambdaQueryWrapper<ServeItem> queryWrapper = Wrappers.<ServeItem>lambdaQuery().eq(ServeItem::getName, serveItemUpsertReqDTO.getName());
-        Integer count = baseMapper.selectCount(queryWrapper);
+        Long count = baseMapper.selectCount(queryWrapper);
         if (count > 0) {
             throw new ForbiddenOperationException("服务项名称不可重复");
         }
@@ -201,7 +201,7 @@ public class ServeItemServiceImpl extends ServiceImpl<ServeItemMapper, ServeItem
      * @return 服务项数量
      */
     @Override
-    public int queryActiveServeItemCountByServeTypeId(Long serveTypeId) {
+    public long queryActiveServeItemCountByServeTypeId(Long serveTypeId) {
         LambdaQueryWrapper<ServeItem> queryWrapper = Wrappers.<ServeItem>lambdaQuery()
                 .eq(ServeItem::getServeTypeId, serveTypeId)
                 .eq(ServeItem::getActiveStatus, FoundationStatusEnum.ENABLE.getStatus());
