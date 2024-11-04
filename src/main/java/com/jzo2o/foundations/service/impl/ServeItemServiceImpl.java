@@ -75,7 +75,6 @@ public class ServeItemServiceImpl extends ServiceImpl<ServeItemMapper, ServeItem
      * @return 服务项
      */
     @Override
-    @CachePut(value = RedisConstants.CacheName.SERVE_ITEM, key = "#id", unless = "#result.activeStatus != 2", cacheManager = RedisConstants.CacheManager.ONE_DAY)
     public ServeItem update(Long id, ServeItemUpsertReqDTO serveItemUpsertReqDTO) {
         //1.更新服务项
         ServeItem serveItem = BeanUtil.toBean(serveItemUpsertReqDTO, ServeItem.class);
@@ -103,7 +102,6 @@ public class ServeItemServiceImpl extends ServiceImpl<ServeItemMapper, ServeItem
      */
     @Override
     @Transactional
-    @CachePut(value = RedisConstants.CacheName.SERVE_ITEM, key = "#id", cacheManager = RedisConstants.CacheManager.ONE_DAY)
     public ServeItem activate(Long id) {
 
         //查询服务项
@@ -147,7 +145,6 @@ public class ServeItemServiceImpl extends ServiceImpl<ServeItemMapper, ServeItem
      */
     @Override
     @Transactional
-    @CacheEvict(value = RedisConstants.CacheName.SERVE_ITEM, key = "#id", beforeInvocation = true)
     public void deactivate(Long id) {
         //查询服务项
         ServeItem serveItem = baseMapper.selectById(id);
