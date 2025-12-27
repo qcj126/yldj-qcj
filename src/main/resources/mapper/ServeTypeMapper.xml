@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jzo2o.foundations.mapper.ServeTypeMapper">
-    <insert id="insertIntoServeType">
-        INSERT INTO serve_type(id, code, name, serve_type_icon, img, sort_num)
-        VALUES(#{primaryId}, #{serveCode}, #{name}, #{serveTypeIcon}, #{img}, #{sortNum})
-    </insert>
 
-    <select id="selectCountByName" resultType="java.lang.Integer">
-        SELECT COUNT(*) FROM serve_type WHERE name = #{name}
-    </select>
 </mapper>

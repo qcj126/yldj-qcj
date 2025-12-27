@@ -1,8 +1,8 @@
 package com.jzo2o.foundations.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.jzo2o.foundations.model.domain.ServeType;
-import org.apache.ibatis.annotations.Param;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -13,7 +13,4 @@ import org.apache.ibatis.annotations.Param;
  * @since 2023-07-03
  */
 public interface ServeTypeMapper extends BaseMapper<ServeType> {
-    Integer selectCountByName(@Param("name") String name);
-
-    void insertIntoServeType(Long primaryId, String serveCode, String name, String serveTypeIcon, String img, Integer sortNum);
 }

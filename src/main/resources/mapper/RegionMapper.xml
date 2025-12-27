@@ -2,7 +2,4 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jzo2o.foundations.mapper.RegionMapper">
 
-    <update id="updateActiveStatus">
-        update region set active_status = #{activeStatus} where id = #{id}
-    </update>
 </mapper>

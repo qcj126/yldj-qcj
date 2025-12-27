@@ -1,6 +1,7 @@
 package com.jzo2o.foundations.controller.operation;
 
 import com.jzo2o.api.foundations.dto.response.ServeTypeSimpleResDTO;
+import com.jzo2o.common.enums.EnableStatusEnum;
 import com.jzo2o.common.model.PageResult;
 import com.jzo2o.foundations.model.dto.request.ServeTypePageQueryReqDTO;
 import com.jzo2o.foundations.model.dto.request.ServeTypeUpsertReqDTO;
@@ -10,19 +11,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.constraints.NotNull;
-import java.net.UnknownHostException;
 import java.util.List;
 
 /**
@@ -49,7 +41,7 @@ public class ServeTypeController {
 
     @PostMapping
     @ApiOperation("服务类型新增")
-    public void add(@RequestBody ServeTypeUpsertReqDTO serveTypeUpsertReqDTO) throws UnknownHostException {
+    public void add(@RequestBody ServeTypeUpsertReqDTO serveTypeUpsertReqDTO) {
         serveTypeService.add(serveTypeUpsertReqDTO);
     }
 

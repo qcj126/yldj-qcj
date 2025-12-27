@@ -48,7 +48,7 @@ public class ServeItemController {
     }
 
 
-    @PutMapping("/activate/{id}")    //启用状态，1：禁用，2：启用
+    @PutMapping("/activate/{id}")    //启用状态，1：禁用，:2：启用
     @ApiOperation("服务项启用")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "服务id", required = true, dataTypeClass = Long.class),

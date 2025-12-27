@@ -6,8 +6,6 @@ import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
-import com.baomidou.mybatisplus.core.incrementer.DefaultIdentifierGenerator;
-import com.baomidou.mybatisplus.core.toolkit.Sequence;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -25,13 +23,10 @@ import com.jzo2o.foundations.service.IServeItemService;
 import com.jzo2o.foundations.service.IServeSyncService;
 import com.jzo2o.foundations.service.IServeTypeService;
 import com.jzo2o.mysql.utils.PageUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.List;
 
 /**
@@ -46,8 +41,6 @@ public class ServeTypeServiceImpl extends ServiceImpl<ServeTypeMapper, ServeType
     private IServeItemService serveItemService;
     @Resource
     private IServeSyncService serveSyncService;
-    @Autowired
-    private ServeTypeMapper serveTypeMapper;
 
     /**
      * 服务类型新增
@@ -55,22 +48,18 @@ public class ServeTypeServiceImpl extends ServiceImpl<ServeTypeMapper, ServeType
      * @param serveTypeUpsertReqDTO 插入更新服务类型
      */
     @Override
-    public void add(ServeTypeUpsertReqDTO serveTypeUpsertReqDTO) throws UnknownHostException {
-        // 校验名称是否重复
-        String name = serveTypeUpsertReqDTO.getName();
-        Integer isExist = serveTypeMapper.selectCountByName(name);
-        if (isExist > 0) {
+    public void add(ServeTypeUpsertReqDTO serveTypeUpsertReqDTO) {
+        //校验名称是否重复
+        LambdaQueryWrapper<ServeType> queryWrapper = Wrappers.<ServeType>lambdaQuery().eq(ServeType::getName, serveTypeUpsertReqDTO.getName());
+        Long count = baseMapper.selectCount(queryWrapper);
+        if(count>0){
             throw new ForbiddenOperationException("服务类型名称不可重复");
         }
 
         //新增服务类型
-        DefaultIdentifierGenerator defaultIdentifierGenerator = new DefaultIdentifierGenerator(new Sequence(InetAddress.getLocalHost()));
-        Long primaryId = defaultIdentifierGenerator.nextId(serveTypeUpsertReqDTO);
-        String serveCode = IdUtil.getSnowflakeNextIdStr();
-        String img = serveTypeUpsertReqDTO.getImg();
-        String serveTypeIcon = serveTypeUpsertReqDTO.getServeTypeIcon();
-        Integer sortNum = serveTypeUpsertReqDTO.getSortNum();
-        baseMapper.insertIntoServeType(primaryId, serveCode, name, serveTypeIcon, img, sortNum);
+        ServeType serveType = BeanUtil.toBean(serveTypeUpsertReqDTO, ServeType.class);
+        serveType.setCode(IdUtil.getSnowflakeNextIdStr());
+        baseMapper.insert(serveType);
     }
 
     /**
