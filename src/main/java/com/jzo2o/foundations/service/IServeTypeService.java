@@ -8,6 +8,7 @@ import com.jzo2o.foundations.model.dto.request.ServeTypePageQueryReqDTO;
 import com.jzo2o.foundations.model.dto.request.ServeTypeUpsertReqDTO;
 import com.jzo2o.foundations.model.dto.response.ServeTypeResDTO;
 
+import java.net.UnknownHostException;
 import java.util.List;
 
 /**
@@ -20,7 +21,7 @@ public interface IServeTypeService extends IService<ServeType> {
      *
      * @param serveTypeUpsertReqDTO 插入更新服务类型
      */
-    void add(ServeTypeUpsertReqDTO serveTypeUpsertReqDTO);
+    void add(ServeTypeUpsertReqDTO serveTypeUpsertReqDTO) throws UnknownHostException;
 
     /**
      * 服务类型修改

@@ -1,7 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jzo2o.foundations.mapper.ServeMapper">
+    <insert id="insertIntoServe">
+        INSERT INTO serve (id, price, city_code, serve_item_id, region_id)
+        VALUES (#{primaryId}, #{price}, #{cityCode}, #{serveItemId}, #{regionId})
+    </insert>
+    <update id="offSale">
+        update serve set sale_status = 1 where id = #{id}
+    </update>
+    <update id="deleteByServeId">
+        update serve set status = 1100 where id = #{id}
+    </update>
+    <update id="updatePriceByServeId">
+        update serve set price = #{price} where id = #{id}
+    </update>
+    <update id="updateSalesStatus">
+        update serve set sale_status = #{status} where id = #{id}
+    </update>
+    <update id="setOnHotStatus">
+        update serve set is_hot = #{isHot} where id = #{id}
+    </update>
 
-
-
+    <select id="qryRegionServeListById" resultType="com.jzo2o.foundations.model.dto.response.ServeResDTO">
+        select a.id,
+               b.name serveItemName,
+               c.name serveTypeName,
+               b.reference_price referencePrice,
+               a.sale_status saleStatus,
+               a.is_hot isHot,
+               a.price,
+               a.create_time,
+               a.update_time,
+               a.region_id regionId
+        from serve a
+                 inner join serve_item b
+                            on a.serve_item_id = b.id
+                 inner join serve_type c
+                            on b.serve_type_id = c.id
+        where a.region_id = #{regionId} and a.status = 1000
+    </select>
+    <select id="countServeItem" resultType="java.lang.Long">
+        select count(*)
+        from serve_item a, serve b
+        where a.id = b.serve_item_id
+            and b.region_id = #{regionId} and a.id = #{serveItemId};
+    </select>
+    <select id="countOnSaleServeByRegionId" resultType="java.lang.Integer">
+        select count(*) from serve where region_id = #{id} and sale_status = #{status}
+    </select>
+    <select id="countOnSaleServeByServeItemId" resultType="java.lang.Integer">
+        select count(*) from serve where serve_item_id = #{id} and sale_status = #{status}
+    </select>
 </mapper>

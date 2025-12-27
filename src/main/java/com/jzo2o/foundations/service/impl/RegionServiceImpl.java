@@ -3,17 +3,16 @@ package com.jzo2o.foundations.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jzo2o.api.foundations.dto.response.RegionSimpleResDTO;
 import com.jzo2o.common.expcetions.ForbiddenOperationException;
 import com.jzo2o.common.model.PageResult;
-import com.jzo2o.foundations.constants.RedisConstants;
 import com.jzo2o.foundations.enums.FoundationStatusEnum;
 import com.jzo2o.foundations.mapper.CityDirectoryMapper;
 import com.jzo2o.foundations.mapper.RegionMapper;
+import com.jzo2o.foundations.mapper.ServeMapper;
 import com.jzo2o.foundations.model.domain.CityDirectory;
 import com.jzo2o.foundations.model.domain.Region;
 import com.jzo2o.foundations.model.dto.request.RegionPageQueryReqDTO;
@@ -22,9 +21,6 @@ import com.jzo2o.foundations.model.dto.response.RegionResDTO;
 import com.jzo2o.foundations.service.IConfigRegionService;
 import com.jzo2o.foundations.service.IRegionService;
 import com.jzo2o.mysql.utils.PageUtils;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,6 +39,10 @@ public class RegionServiceImpl extends ServiceImpl<RegionMapper, Region> impleme
     private IConfigRegionService configRegionService;
     @Resource
     private CityDirectoryMapper cityDirectoryMapper;
+    @Resource
+    private ServeMapper serveMapper;
+    @Resource
+    private RegionMapper regionMapper;
 
 
     /**
@@ -153,17 +153,13 @@ public class RegionServiceImpl extends ServiceImpl<RegionMapper, Region> impleme
         if (!(FoundationStatusEnum.INIT.getStatus() == activeStatus || FoundationStatusEnum.DISABLE.getStatus() == activeStatus)) {
             throw new ForbiddenOperationException("草稿或禁用状态方可启用");
         }
-        //如果需要启用区域，需要校验该区域下是否有上架的服务
-        //todo
-
+        //如果需要启用区域，需要校验该区域下是否有上架的服务，有：启用成功；无：启用失败
+        Integer isExist = serveMapper.countOnSaleServeByRegionId(id, FoundationStatusEnum.ENABLE.getStatus());
+        if (isExist < 1) {
+            throw new ForbiddenOperationException("区域下存在上架的服务方可启用");
+        }
         //更新启用状态
-        LambdaUpdateWrapper<Region> updateWrapper = Wrappers.<Region>lambdaUpdate()
-                .eq(Region::getId, id)
-                .set(Region::getActiveStatus, FoundationStatusEnum.ENABLE.getStatus());
-        update(updateWrapper);
-
-        //3.如果是启用操作，刷新缓存：启用区域列表、首页图标、热门服务、服务类型
-        // todo
+        regionMapper.updateActiveStatus(id, FoundationStatusEnum.ENABLE.getStatus());
     }
 
     /**
@@ -183,17 +179,13 @@ public class RegionServiceImpl extends ServiceImpl<RegionMapper, Region> impleme
         }
 
         //1.如果禁用区域下有上架的服务则无法禁用
-        //todo
-//        int count = serveService.queryServeCountByRegionIdAndSaleStatus(id, FoundationStatusEnum.ENABLE.getStatus());
-//        if (count > 0) {
-//            throw new ForbiddenOperationException("区域下有上架的服务无法禁用");
-//        }
+        int count = serveMapper.countOnSaleServeByRegionId(id, FoundationStatusEnum.ENABLE.getStatus());
+        if (count > 0) {
+            throw new ForbiddenOperationException("区域下不存在上架的服务方可禁用");
+        }
 
         //更新禁用状态
-        LambdaUpdateWrapper<Region> updateWrapper = Wrappers.<Region>lambdaUpdate()
-                .eq(Region::getId, id)
-                .set(Region::getActiveStatus, FoundationStatusEnum.DISABLE.getStatus());
-        update(updateWrapper);
+        regionMapper.updateActiveStatus(id, FoundationStatusEnum.DISABLE.getStatus());
     }
 
     /**

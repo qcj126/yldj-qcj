@@ -8,7 +8,9 @@ import lombok.Getter;
 public enum FoundationStatusEnum {
     INIT(0,"草稿"),
     ENABLE(2,"启用"),
-    DISABLE(1, "禁用");
+    DISABLE(1, "禁用"),
+    NOT_HOT(0, "取消区域服务热门状态"),
+    IS_HOT(1, "设置区域服务热门状态");
     private int status;
     private String description;
 

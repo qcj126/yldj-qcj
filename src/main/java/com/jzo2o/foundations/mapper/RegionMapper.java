@@ -1,8 +1,8 @@
 package com.jzo2o.foundations.mapper;
 
-import com.jzo2o.foundations.model.domain.Region;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Mapper;
+import com.jzo2o.foundations.model.domain.Region;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -13,4 +13,5 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2023-07-03
  */
 public interface RegionMapper extends BaseMapper<Region> {
+    void updateActiveStatus(@Param("id") Long id, @Param("activeStatus") int activeStatus);
 }

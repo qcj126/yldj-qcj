@@ -1,20 +1,27 @@
 package com.jzo2o.foundations.service;
 
+import cn.hutool.core.lang.Assert;
+import com.jzo2o.common.model.PageResult;
+import com.jzo2o.foundations.model.dto.request.ServePageQueryReqDTO;
+import com.jzo2o.foundations.model.dto.response.ServeResDTO;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import javax.annotation.Resource;
 
 @SpringBootTest
 @Slf4j
 class IServeServiceTest {
-//    @Resource
-//    private IServeService serveService;
-
+    @Resource
+    private IServeService serveService;
+//
 //    @Test
 //    void listServeItemByCityCode() {
 //        List<Long> longs = serveService.queryServeItemIdListByCityCode("010");
 //        System.out.println(longs);
 //    }
-
+//
 //    @Test
 //    void findHotServeListByCityCode() {
 //        List<ServeAggregationSimpleResDTO> list = serveService.findHotServeListByCityCode("010");
@@ -32,7 +39,7 @@ class IServeServiceTest {
 //        List<ServeCategoryResDTO> list = serveService.findServeIconCategoryByCityCode("010");
 //        System.out.println(list.toString());
 //    }
-
+//
 //    @Test
 //    void findDetailById() {
 //        ServeAggregationSimpleResDTO detail = serveService.findDetailById(1693815624114970626L);
@@ -51,15 +58,17 @@ class IServeServiceTest {
 //    }
 
 
-    //分页测试
-//    @Test
-//    public void test_page(){
-//        ServePageQueryReqDTO servePageQueryReqDTO = new ServePageQueryReqDTO();
-//        servePageQueryReqDTO.setRegionId(1677152267410149378L);
-//        servePageQueryReqDTO.setPageNo(1L);
-//        servePageQueryReqDTO.setPageSize(3L);
-//        PageResult<ServeResDTO> page = serveService.page(servePageQueryReqDTO);
-//        log.info("page : {}", page);
-//        Assert.notEmpty(page.getList(),"列表为空");
-//    }
+//    分页测试
+    @Test
+    public void test_page(){
+        ServePageQueryReqDTO servePageQueryReqDTO = new ServePageQueryReqDTO();
+        servePageQueryReqDTO.setRegionId(1677152267410149378L);
+        servePageQueryReqDTO.setPageNo(1L);
+        servePageQueryReqDTO.setPageSize(3L);
+        PageResult<ServeResDTO> page = serveService.page(servePageQueryReqDTO);
+        log.info("page : {}", page);
+        Assert.notEmpty(page.getList(),"列表为空");
+    }
+    
+
 }
