@@ -10,7 +10,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.jzo2o.api.foundations.dto.response.RegionSimpleResDTO;
 import com.jzo2o.common.expcetions.ForbiddenOperationException;
 import com.jzo2o.common.model.PageResult;
-import com.jzo2o.foundations.constants.RedisConstants;
 import com.jzo2o.foundations.enums.FoundationStatusEnum;
 import com.jzo2o.foundations.mapper.CityDirectoryMapper;
 import com.jzo2o.foundations.mapper.RegionMapper;
@@ -22,9 +21,6 @@ import com.jzo2o.foundations.model.dto.response.RegionResDTO;
 import com.jzo2o.foundations.service.IConfigRegionService;
 import com.jzo2o.foundations.service.IRegionService;
 import com.jzo2o.mysql.utils.PageUtils;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -108,7 +104,6 @@ public class RegionServiceImpl extends ServiceImpl<RegionMapper, Region> impleme
         }
         //删除
         baseMapper.deleteById(id);
-
     }
 
     /**

@@ -4,9 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.jzo2o.api.foundations.dto.response.ServeItemResDTO;
 import com.jzo2o.api.foundations.dto.response.ServeTypeCategoryResDTO;
 import com.jzo2o.foundations.model.domain.ServeItem;
-import com.jzo2o.foundations.model.domain.ServeType;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -44,17 +42,11 @@ public interface ServeItemMapper extends BaseMapper<ServeItem> {
     ServeItemResDTO queryServeItemAndTypeById(@Param("id") Long id);
 
     /**
-     * 根据服务id查询服务项
-     *
-     * @param id 服务id
-     * @return 服务项
-     */
-    ServeItem queryServeItemByServeId(@Param("id") Long id);
-
-    /**
      * 查询启用状态的服务项目录
      *
      * @return 服务项目录
      */
     List<ServeTypeCategoryResDTO> queryActiveServeItemCategory();
+
+    Integer qryActiveStatus(Long serveItemId);
 }

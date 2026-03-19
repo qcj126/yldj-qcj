@@ -83,4 +83,9 @@ public class Serve implements Serializable {
      */
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long updateBy;
+
+    /**
+     * 状态，1000：正常，1100：删除
+     */
+    private Integer status;
 }

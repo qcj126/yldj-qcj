@@ -77,6 +77,9 @@
             type.sort_num,
             item.sort_num
     </select>
+    <select id="qryActiveStatus" resultType="java.lang.Integer">
+        SELECT active_status FROM serve_item WHERE id = #{serveItemId} and status = 1000;
+    </select>
 
     <!--手动的映射-->
     <resultMap id="ServeItemCategoryMap" type="com.jzo2o.api.foundations.dto.response.ServeTypeCategoryResDTO">
