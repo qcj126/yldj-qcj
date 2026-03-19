@@ -13,6 +13,7 @@
         <module name="jzo2o-common" />
         <module name="jzo2o-es" />
         <module name="jzo2o-xxl-job" />
+        <module name="jzo2o-foundations (1)" />
         <module name="jzo2o-foundations" />
         <module name="jzo2o-seata" />
         <module name="jzo2o-statemachine" />
@@ -36,6 +37,7 @@
       <module name="jzo2o-customer" options="-parameters" />
       <module name="jzo2o-es" options="-parameters" />
       <module name="jzo2o-foundations" options="-parameters" />
+      <module name="jzo2o-foundations (1)" options="-parameters" />
       <module name="jzo2o-gateway" options="-parameters" />
       <module name="jzo2o-knife4j-web" options="-parameters" />
       <module name="jzo2o-mvc" options="-parameters" />
