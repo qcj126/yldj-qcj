@@ -3,6 +3,7 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/jzo2o-api" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/jzo2o-customer" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/jzo2o-foundations" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/jzo2o-framework" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/jzo2o-gateway" vcs="Git" />
